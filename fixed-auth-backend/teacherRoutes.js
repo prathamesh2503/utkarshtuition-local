@@ -13,6 +13,8 @@ const upload = multer({ storage });
 // Create or update teacher data
 router.post("/teacher", upload.single("teacher-image"), async (req, res) => {
   try {
+    console.log(req.body);
+
     const { ["teacher-name"]: name, ["about-me-description"]: description } =
       req.body;
 

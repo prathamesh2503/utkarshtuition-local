@@ -9,11 +9,15 @@ const EditAboutMe = () => {
   useEffect(() => {
     const fetchTeacher = async () => {
       try {
-        const res = await fetch("http://localhost:4000/teacher");
+        const res = await fetch(
+          "https://utkarshtuition-backend.vercel.app/api",
+        );
         const data = await res.json();
         if (data.success) {
           setTeacher(data.teacher);
           console.log(data.teacher);
+        } else {
+          return;
         }
       } catch (error) {
         console.error("Error fetching teacher:", error);
@@ -27,11 +31,15 @@ const EditAboutMe = () => {
 
     // This line collects all the input values from the form that was submitted and stores them in a special object (formData) so you can easily use or send them.
     const formData = new FormData(e.target);
+    console.log(formData);
 
-    const response = await fetch("http://localhost:4000/teacher", {
-      method: "Post",
-      body: formData,
-    });
+    const response = await fetch(
+      "https://utkarshtuition-backend.vercel.app/api/teacher",
+      {
+        method: "POST",
+        body: formData,
+      },
+    );
     if (!response.ok) {
       console.error("Error:", response.statusText);
     }
@@ -44,12 +52,12 @@ const EditAboutMe = () => {
   // Delete Data from database
   const handleDelete = async () => {
     const responseDel = await fetch(
-      `http://localhost:4000/teacher/${teacher.id}`,
+      `https://utkarshtuition-backend.vercel.app/api/teacher/${teacher.id}`,
       {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imagePath: teacher.imageUrl }),
-      }
+      },
     );
     const resData = await responseDel.json();
     console.log(resData);

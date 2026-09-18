@@ -2,18 +2,26 @@ import { useState } from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
+// component created to develop login page
 const TeacherLogin = () => {
+  // hook useState used to read and update state values from input fields
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //errors is state variable used to store mistakes made by user while filling form fields. setErrors sets an errors once they occured while test conducted on user input values.
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // Regex Pattern
+  // Regex Pattern used to validate input format of input fields
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  // async and await - It used to specific function to pause there to get data from server and gives control to event loop to handle other operations.
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // created empty object to store error message
     let validateErrors = {};
+
     //Email Validation
     if (!emailPattern.test(email)) {
       validateErrors.email = "Please enter a valid email address.";
@@ -27,22 +35,27 @@ const TeacherLogin = () => {
 
     setErrors(validateErrors);
 
+    // try {risky operation that can be crashed and isolated from stable part} catch { code which runs when error occurs}
     try {
-      // Send data to backend
-      const response = await fetch("https://utkarshtuition.vercel.app/login", {
-        method: "POST", // method to send data to server
+      // Send data to backend and pauses untill respose arrives
+      const response = await fetch("http://localhost:4000/login", {
+        // method to send data to server for process complext action[to authonicate login data] and get response back
+        method: "POST",
+        // telling server we are sending JSON
         headers: {
-          "Content-Type": "application/json", // telling server we are sending JSON
+          "Content-Type": "application/json",
         },
+        // converts a JavaScript object into a JSON string so it can be sent to a server.
         body: JSON.stringify({ email, password }),
-        credentials: "include", // Important to send/receive cookies
+        // Important to send/receive cookies. Always sends cookies, even for cross-origin (third-party) API requests
+        credentials: "include",
       });
-
       /*
-response = raw HTTP response (headers, status, body as stream). (Object)
-.json() = parses the body into a JavaScript object.
-data = actual usable object you can work with.
-*/
+          response = raw HTTP response (headers, status, body as stream). (Object)
+          .json() = parses the body into a JavaScript object.
+          data = actual usable object you can work with.
+      */
+      // pauses untill parsing gets completed
       const data = await response.json();
       console.log(response);
       console.log(response.ok);
@@ -63,7 +76,8 @@ data = actual usable object you can work with.
     <>
       <Header />
       <main className="login-page">
-        <h3>Registered Teacher Login</h3>
+        <h3>Teacher Login</h3>
+        {/* form tag used to submit data collected from input fields */}
         <form
           action=""
           className="login-form"
@@ -75,6 +89,7 @@ data = actual usable object you can work with.
             type="email"
             name="email"
             id="email"
+            // on every keystroke react update state
             onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password: </label>
@@ -84,8 +99,10 @@ data = actual usable object you can work with.
             id="password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <input type="submit" value="Teacher Login" className="login-btn" />
+          <input type="submit" value="Login" className="login-btn" />
         </form>
+
+        {/* Conditional operator used to show text */}
         {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
         {errors.password && (
           <p style={{ color: "red", fontSize: "15px", margin: "0px 10px" }}>
