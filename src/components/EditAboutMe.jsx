@@ -10,7 +10,7 @@ const EditAboutMe = () => {
     const fetchTeacher = async () => {
       try {
         const res = await fetch(
-          "https://utkarshtuition-backend.vercel.app/api",
+          "https://utkarshtuition-backend.vercel.app/api/teacher",
         );
         const data = await res.json();
         if (data.success) {
