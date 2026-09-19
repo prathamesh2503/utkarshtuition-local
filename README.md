@@ -118,3 +118,13 @@ This application utilizes Supabase. The primary tables include:
 Teacher: Stores dynamic data for the About Me section.
 
 Student : Stores student names, grades, and year details.
+
+## Screenshots
+
+<img width="1349" height="588" alt="image" src="https://github.com/user-attachments/assets/fd84bc0b-a483-43ce-9b3b-0a03bd6a415e" />
+
+<img width="1365" height="723" alt="image" src="https://github.com/user-attachments/assets/2e74346c-4f4c-46d8-a2f1-ecc609b8477b" />
+
+<img width="1354" height="594" alt="image" src="https://github.com/user-attachments/assets/5df21f6f-19a9-4dd6-a6a8-ed0e4dba2cb7" />
+
+
